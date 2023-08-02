@@ -134,7 +134,7 @@ function cloneTC() {
     elif [ $COMPILER = "clang14" ];
 	then
 	#git clone https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/ -b android10-gsi --depth 1 --no-tags --single-branch clang_all
-    wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/android-9.0.0_r6/clang-4639204.tar.gz && mkdir clang && tar -xzvf clang-4639204.tar.gz -C clang/
+    wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main/clang-r450784e.tar.gz && mkdir clang && tar -xzvf clang-r450784e.tar.gz -C clang/
     #mv clang_all/clang-r353983c clang
     #rm -rf clang_all
     export KERNEL_CLANG_PATH="${KERNEL_DIR}/clang"
@@ -247,14 +247,14 @@ START=$(date +"%s")
 	       CC=clang \
 	       CROSS_COMPILE=aarch64-linux-gnu- \
 	       CROSS_COMPILE_COMPAT=arm-linux-gnueabi- \
-	       LD=${LINKER} \
-	       #LLVM=1 \
-	       #LLVM_IAS=1 \
-	       AR=llvm-ar \
-	       NM=llvm-nm \
-	       OBJCOPY=llvm-objcopy \
-	       OBJDUMP=llvm-objdump \
-	       STRIP=llvm-strip \
+	       #LD=${LINKER} \
+	       LLVM=1 \
+	       LLVM_IAS=1 \
+	       #AR=llvm-ar \
+	       #NM=llvm-nm \
+	       #OBJCOPY=llvm-objcopy \
+	       #OBJDUMP=llvm-objdump \
+	       #STRIP=llvm-strip \
 	       #READELF=llvm-readelf \
 	       #OBJSIZE=llvm-size \
 	       V=$VERBOSE 2>&1 | tee error.log
