@@ -235,16 +235,15 @@ START=$(date +"%s")
            CROSS_COMPILE=$KERNEL_CCOMPILE64 \
            CROSS_COMPILE_ARM32=$KERNEL_CCOMPILE32 \
            LD=${LINKER} \
-           LLVM=1 \
-           LLVM_IAS=1 \
+           #LLVM=1 \
+           #LLVM_IAS=1 \
            #AR=llvm-ar \
            #NM=llvm-nm \
            #OBJCOPY=llvm-objcopy \
            #OBJDUMP=llvm-objdump \
            #STRIP=llvm-strip \
 	       CLANG_TRIPLE=aarch64-linux-gnu- \
-	       Image.gz dtbo.img
-	       
+	       V=$VERBOSE 2>&1 | tee error.log
 	       
 	elif [ -d ${KERNEL_DIR}/cosmic ];
 	   then
@@ -325,12 +324,12 @@ function zipping() {
 	
 	# Zipping and Push Kernel
 	cd AnyKernel3 || exit 1
-        zip -r9 ${FINAL_ZIP_ALIAS} *
+        zip -r9 ${ZIPNAME} *
         MD5CHECK=$(md5sum "$FINAL_ZIP_ALIAS" | cut -d' ' -f1)
-        echo "Zip: $FINAL_ZIP_ALIAS"
-        #curl -T $FINAL_ZIP_ALIAS temp.sh; echo
-        #curl -T $FINAL_ZIP_ALIAS https://oshi.at; echo
-        curl --upload-file $FINAL_ZIP_ALIAS https://free.keep.sh
+        echo "Zip: $ZIPNAME"
+        #curl -T $ZIPNAME temp.sh; echo
+        #curl -T $ZIPNAME https://oshi.at; echo
+        curl --upload-file $ZIPNAME https://free.keep.sh
     cd ..
 }
 
