@@ -13,12 +13,11 @@ KERNEL_DIR="$(pwd)"
 MODEL=Xiaomi
 DEVICE=chime
 
-
 # Kernel Version Code
 #VERSION=
 
 # Kernel Defconfig
-DEFCONFIG=fury-perf_defconfig
+DEFCONFIG=${DEVICE}_defconfig
 
 # Select LTO variant ( Full LTO by default )
 DISABLE_LTO=0
@@ -175,7 +174,7 @@ function exports() {
         
         # Export ARCH and SUBARCH
         export ARCH=arm64
-        #export SUBARCH=arm64
+        export SUBARCH=arm64
         
         # Export Local Version
         #export LOCALVERSION="-${VERSION}"
@@ -235,8 +234,8 @@ START=$(date +"%s")
            CROSS_COMPILE=$KERNEL_CCOMPILE64 \
            CROSS_COMPILE_ARM32=$KERNEL_CCOMPILE32 \
            LD=${LINKER} \
-           #LLVM=1 \
-           #LLVM_IAS=1 \
+           LLVM=1 \
+           LLVM_IAS=1 \
            #AR=llvm-ar \
            #NM=llvm-nm \
            #OBJCOPY=llvm-objcopy \
@@ -325,7 +324,7 @@ function zipping() {
 	# Zipping and Push Kernel
 	cd AnyKernel3 || exit 1
         zip -r9 ${ZIPNAME} *
-        MD5CHECK=$(md5sum "$FINAL_ZIP_ALIAS" | cut -d' ' -f1)
+        MD5CHECK=$(md5sum "$ZIPNAME" | cut -d' ' -f1)
         echo "Zip: $ZIPNAME"
         #curl -T $ZIPNAME temp.sh; echo
         #curl -T $ZIPNAME https://oshi.at; echo
