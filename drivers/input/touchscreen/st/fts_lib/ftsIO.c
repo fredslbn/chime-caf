@@ -82,7 +82,9 @@ int openChannel(struct i2c_client *clt)
 	return OK;
 }
 
-struct device *getDev()
+// KSU fix
+//struct device *getDev()
+struct device *getDev(void)
 {
 	if (client != NULL)
 		return &(client->dev);
@@ -90,7 +92,9 @@ struct device *getDev()
 		return NULL;
 }
 
-struct i2c_client *getClient()
+// KSU fix
+//struct i2c_client *getClient()
+struct i2c_client *getClient(void)
 {
 	if (client != NULL)
 		return client;
