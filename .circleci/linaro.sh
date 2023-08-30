@@ -25,7 +25,7 @@ THIN_LTO=0
 
 # Files
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz
-#DTBO=$(pwd)/out/arch/arm64/boot/dtbo.img
+DTBO=$(pwd)/out/arch/arm64/boot/dtbo.img
 #DTB=$(pwd)/out/arch/arm64/boot/dts/mediatek
 
 # Verbose Build
@@ -218,7 +218,7 @@ function cloneTC() {
     elif [ $COMPILER = "clang17-7" ];
 	then
 	#git clone https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/ -b android10-gsi --depth 1 --no-tags --single-branch clang_all	
-    wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main/clang-r498229.tar.gz && mkdir clang && tar -xzvf clang-r498229.tar.gz -C clang/
+    wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main/clang-r498229.tar.gz && mkdir clang && tar -xzf clang-r498229.tar.gz -C clang/
     #mv clang_all/clang-r353983c clang
     #rm -rf clang_all
     export KERNEL_CLANG_PATH="${KERNEL_DIR}/clang"
@@ -340,11 +340,12 @@ START=$(date +"%s")
            LD=${LINKER} \
            #LLVM=1 \
            #LLVM_IAS=1 \
-           #AR=llvm-ar \
-           #NM=llvm-nm \
-           #OBJCOPY=llvm-objcopy \
-           #OBJDUMP=llvm-objdump \
-           #STRIP=llvm-strip \	       
+           AR=llvm-ar \
+           AS=llvm-as \
+           NM=llvm-nm \
+           OBJCOPY=llvm-objcopy \
+           OBJDUMP=llvm-objdump \
+           STRIP=llvm-strip \	       
 	       V=$VERBOSE 2>&1 | tee error.log
 	       
 	elif [ -d ${KERNEL_DIR}/cosmic ];
@@ -424,7 +425,7 @@ START=$(date +"%s")
 function zipping() {
 	# Copy Files To AnyKernel3 Zip
 	cp $IMAGE AnyKernel3
-	#cp $DTBO AnyKernel3
+	cp $DTBO AnyKernel3
 	#find $DTB -name "*.dtb" -exec cat {} + > AnyKernel3/dtb
 	
 	# Zipping and Push Kernel
