@@ -25,7 +25,7 @@ THIN_LTO=0
 
 # Files
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz
-DTBO=$(pwd)/out/arch/arm64/boot/dtbo.img
+#DTBO=$(pwd)/out/arch/arm64/boot/dtbo.img
 #DTB=$(pwd)/out/arch/arm64/boot/dts/mediatek
 
 # Verbose Build
@@ -48,7 +48,7 @@ FINAL_ZIP_ALIAS=Karenulgarde-${TANGGAL}.zip
 ##----------------------------------------------------------##
 # Specify compiler.
 
-COMPILER=clang17-7
+COMPILER=cosmic-clang
 
 ##----------------------------------------------------------##
 # Specify Linker
@@ -425,7 +425,7 @@ START=$(date +"%s")
 function zipping() {
 	# Copy Files To AnyKernel3 Zip
 	cp $IMAGE AnyKernel3
-	cp $DTBO AnyKernel3
+	#cp $DTBO AnyKernel3
 	#find $DTB -name "*.dtb" -exec cat {} + > AnyKernel3/dtb
 	
 	# Zipping and Push Kernel
