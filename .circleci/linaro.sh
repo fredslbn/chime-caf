@@ -218,7 +218,7 @@ function cloneTC() {
     elif [ $COMPILER = "clang17-7" ];
 	then
 	#git clone https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/ -b android10-gsi --depth 1 --no-tags --single-branch clang_all	
-    wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main/clang-r498229.tar.gz && mkdir clang && tar -xzf clang-r498229.tar.gz -C clang/
+    wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main/clang-r498229b.tar.gz && mkdir clang && tar -xzf clang-r498229b.tar.gz -C clang/
     #mv clang_all/clang-r353983c clang
     #rm -rf clang_all
     export KERNEL_CLANG_PATH="${KERNEL_DIR}/clang"
