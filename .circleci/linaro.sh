@@ -48,7 +48,7 @@ FINAL_ZIP_ALIAS=Karenulgarde-${TANGGAL}.zip
 ##----------------------------------------------------------##
 # Specify compiler.
 
-COMPILER=clang17-7
+COMPILER=cosmic-clang
 
 ##----------------------------------------------------------##
 # Specify Linker
