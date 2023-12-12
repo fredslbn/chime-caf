@@ -18,7 +18,6 @@
 #include "linux/fs.h"
 #include "linux/namei.h"
 #include "linux/rcupdate.h"
-
 // ksu umount module
 #include "../../fs/mount.h"
 
@@ -40,12 +39,10 @@ extern inline bool may_mount(void);
 extern inline int check_mnt(struct mount *mnt);
 extern void mntput_no_expire(struct mount *mnt);
 extern int do_umount(struct mount *mnt, int flags);
-static inline bool ksu_path_mounted(const struct path *path)
-	{
+static inline bool ksu_path_mounted(const struct path *path){
 		return path->mnt->mnt_root == path->dentry;
 	}
-	static int ksu_can_umount(const struct path *path, int flags)
-	{
+	static int ksu_can_umount(const struct path *path, int flags){
 		struct mount *mnt = real_mount(path->mnt);
 
 		if (!may_mount())
@@ -60,8 +57,7 @@ static inline bool ksu_path_mounted(const struct path *path)
 			return -EPERM;
 		return 0;
 	}
-	int ksu_path_umount(struct path *path, int flags)
-{
+	static int ksu_path_umount(struct path *path, int flags){
 	struct mount *mnt = real_mount(path->mnt);
 	int ret;
 
@@ -77,6 +73,7 @@ static inline bool ksu_path_mounted(const struct path *path)
 #else
 	//not tested
 #endif
+
 
 extern int handle_sepolicy(unsigned long arg3, void __user *arg4);
 
