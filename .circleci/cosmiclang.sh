@@ -258,7 +258,7 @@ function cloneTC() {
 	fi
 	
     # Clone AnyKernel
-    #git clone --depth=1 https://github.com/missgoin/AnyKernel3.git
+    # git clone --depth=1 https://github.com/missgoin/AnyKernel3.git
 
 	}
 
@@ -341,11 +341,13 @@ START=$(date +"%s")
            #LLVM=1 \
            #LLVM_IAS=1 \
            AR=llvm-ar \
-           AS=llvm-as \
-           NM=llvm-nm \
-           OBJCOPY=llvm-objcopy \
-           OBJDUMP=llvm-objdump \
-           STRIP=llvm-strip \	       
+	       AS=llvm-as \
+	       NM=llvm-nm \
+	       OBJCOPY=llvm-objcopy \
+	       OBJDUMP=llvm-objdump \
+	       STRIP=llvm-strip \
+	       READELF=llvm-readelf \
+	       OBJSIZE=llvm-size \     
 	       V=$VERBOSE 2>&1 | tee error.log
 	       
 	elif [ -d ${KERNEL_DIR}/cosmic ];
@@ -426,18 +428,20 @@ START=$(date +"%s")
 function zipping() {
 	# Copy Files To AnyKernel3 Zip
 	cp $IMAGE AnyKernel3
-	#cp $DTBO AnyKernel3
-	#find $DTB -name "*.dtb" -exec cat {} + > AnyKernel3/dtb
+	# cp $DTBO AnyKernel3
+	# find $DTB -name "*.dtb" -exec cat {} + > AnyKernel3/dtb
 	
 	# Zipping and Push Kernel
 	cd AnyKernel3 || exit 1
         zip -r9 ${ZIPNAME} *
         MD5CHECK=$(md5sum "$ZIPNAME" | cut -d' ' -f1)
         echo "Zip: $ZIPNAME"
-        #curl -T $ZIPNAME temp.sh; echo
-        #curl -T $ZIPNAME https://oshi.at; echo
+        # curl -T $ZIPNAME temp.sh; echo
+        # curl -T $ZIPNAME https://oshi.at; echo
         curl --upload-file $ZIPNAME https://free.keep.sh
     cd ..
+    rm -rf out
+    
 }
 
     
