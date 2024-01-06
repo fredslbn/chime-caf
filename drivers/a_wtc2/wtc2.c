@@ -26,7 +26,7 @@ static void* find_sym( const char *sym ) {  // find address kernel symbol sym
 		if( 0 == strcmp( (char*)data, sym ) ) { 
 			faddr = addr; 
 			return 1; 
-		} 
+		}
 		else return 0; 
 	}; 
 	// -------------------------------------------------------- 
@@ -40,7 +40,7 @@ static int target_pid = 0;
 module_param(target_pid, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 MODULE_PARM_DESC(target_pid, "Target process PID");
 
-static int verb = 0;
+static int verb = 1;
 module_param(verb, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 MODULE_PARM_DESC(verb, "Set to non-0 to make the module verbose");
 

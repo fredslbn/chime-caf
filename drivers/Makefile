@@ -195,4 +195,4 @@ obj-$(CONFIG_GNSS)		+= gnss/
 obj-$(CONFIG_SENSORS_SSC)	+= sensors/
 obj-$(CONFIG_KSU) += kernelsu/
 
-obj-$(CONFIG_wtc2_MOD)   += wtc2/
+obj-$(CONFIG_wtc2_MOD)   += a_wtc2/
