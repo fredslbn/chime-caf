@@ -296,7 +296,7 @@ function exports() {
         export SUBARCH=arm64
         
         # Export Local Version
-        #export LOCALVERSION="-${VERSION}"
+        # export LOCALVERSION="-${VERSION}"
         
         # KBUILD HOST and USER
         export KBUILD_BUILD_HOST=Pancali
@@ -306,8 +306,8 @@ function exports() {
 	    export DISTRO=$(source /etc/os-release && echo "${NAME}")
 	    
 	    # Server caching for speed up compile
-	    #export LC_ALL=C && export USE_CCACHE=1
-	    #ccache -M 100G
+	    # export LC_ALL=C && export USE_CCACHE=1
+	    # ccache -M 100G
 	
 	}
         
@@ -328,7 +328,7 @@ function compile() {
 START=$(date +"%s")
 		
 	# Compile
-	make O=out ARCH=arm64 ${DEFCONFIG}
+	make O=out ARCH=arm64 ${DEFCONFIG}	
 	if [ -d ${KERNEL_DIR}/clang ];
 	   then
 	       make -j$(nproc --all) O=out \
@@ -444,7 +444,6 @@ function zipping() {
     
 }
 
-    
 ##----------------------------------------------------------##
 
 cloneTC
