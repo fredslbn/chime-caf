@@ -27,6 +27,21 @@ static struct kprobe kp = {
 };
 #endif
 
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,11,0)
+#define FTRACE_OPS_FL_RECURSION FTRACE_OPS_FL_RECURSION_SAFE
+#endif
+
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,11,0)
+#define ftrace_regs pt_regs
+
+static __always_inline struct pt_regs *ftrace_get_regs(struct ftrace_regs *fregs)
+{
+	return fregs;
+}
+#endif
+
+
+
 #define HOOK(_name, _hook, _orig)   \
 {                   \
     .name = (_name),        \
