@@ -44,9 +44,9 @@ static struct kprobe kp = {
  * protection and implement our own).
  * */
 #define USE_FENTRY_OFFSET 0
-// #if !USE_FENTRY_OFFSET
-// #pragma GCC optimize("-fno-optimize-sibling-calls")
-// #endif
+ #if !USE_FENTRY_OFFSET
+ #pragma GCC optimize("-fno-optimize-sibling-calls")
+ #endif
 
 /* We pack all the information we need (name, hooking function, original function)
  * into this struct. This makes is easier for setting up the hook and just passing
@@ -98,9 +98,9 @@ static void notrace fh_ftrace_thunk(unsigned long ip, unsigned long parent_ip, s
 
 #if USE_FENTRY_OFFSET
     regs->ip = (unsigned long) hook->function;
-// #else
-//    if(!within_module(parent_ip, THIS_MODULE))
-//        regs->ip = (unsigned long) hook->function;
+ #else
+    if(!within_module(parent_ip, THIS_MODULE))
+        regs->ip = (unsigned long) hook->function;
 #endif
 }
 
