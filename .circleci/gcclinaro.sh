@@ -214,6 +214,9 @@ MAKE="./makeparallel"
 function compile() {
 START=$(date +"%s")
 			       
+	# Compile
+	make O=out ARCH=arm64 ${DEFCONFIG}
+	
 	if [ -d ${KERNEL_DIR}/cosmic-clang ];
 	   then
 	       make -kj$(nproc --all) O=out \
@@ -239,6 +242,7 @@ START=$(date +"%s")
 	       make -kj$(nproc --all) O=out \
 	       ARCH=arm64 \
 	       CROSS_COMPILE=$KERNEL_CCOMPILE64 \
+	       CROSS_COMPILE_ARM32=$KERNEL_CCOMPILE32 \
            CROSS_COMPILE_COMPAT=$KERNEL_CCOMPILE32 \
 	       #LD=aarch64-elf-${LINKER} \
 	       #AR=llvm-ar \
