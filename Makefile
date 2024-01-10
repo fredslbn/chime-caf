@@ -1430,8 +1430,7 @@ kselftest-merge:
 # Target to install modules and accompanying files
 PHONY += modules_install
 modules_install: _modinst_ _modinst_post
-  
-PHONY += _modinst_
+
 _modinst_:
 	@rm -f $(MODLIB)/build ; \
 	@ln -s $(CURDIR) $(MODLIB)/build ; \
@@ -1440,17 +1439,20 @@ _modinst_:
 	@cp -f $(objtree)/modules.builtin.modinfo $(MODLIB)/
 
 ifdef CONFIG_MODULES
-	@sed 's:^:kernel/:' modules.order > $(MODLIB)/modules.order
+# This depmod is only for convenience to give the initial
+# boot a modules.dep even before / is mounted read-write.  However the
+# boot script depmod is the master version.@sed 's:^:kernel/:' modules.order > $(MODLIB)/modules.order
 	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.modinst
 else
 	@touch $(MODLIB)/modules.order
 endif
 
-   # This depmod is only for convenience to give the initial
-   # boot a modules.dep even before / is mounted read-write.
-  PHONY += _modinst_post
-  _modinst_post: _modinst_
-  	$(call cmd,depmod)
+# This depmod is only for convenience to give the initial
+# boot a modules.dep even before / is mounted read-write.  However the
+# boot script depmod is the master version.
+PHONY += _modinst_post
+_modinst_post: _modinst_
+	$(call cmd,depmod)
 
 ifdef CONFIG_MODULES
 
