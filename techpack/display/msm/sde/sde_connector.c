@@ -976,8 +976,6 @@ void sde_connector_destroy(struct drm_connector *connector)
 	kfree(c_conn);
 }
 
-EXPORT_SYMBOL(sde_connector_destroy);
-
 /**
  * _sde_connector_destroy_fb - clean up connector state's out_fb buffer
  * @c_conn: Pointer to sde connector structure
