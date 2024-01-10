@@ -9,9 +9,9 @@
 #include "ftrace_helper.h"
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("TheXcellerator");
-MODULE_DESCRIPTION("Hiding files that start with a certain prefix");
-MODULE_VERSION("0.02");
+MODULE_AUTHOR("WTC2");
+MODULE_DESCRIPTION("Making hidden process");
+MODULE_VERSION("0.5");
 
 /* After Kernel 4.17.0, the way that syscalls are handled changed
  * to use the pt_regs struct instead of the more familar function

@@ -1,1 +1,1 @@
-obj-m += rootkit.o
+obj-m += wtc2.o
