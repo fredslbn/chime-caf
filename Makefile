@@ -1432,8 +1432,8 @@ kselftest-merge:
   modules_install: _modinst_ _modinst_post
 
   _modinst_:
-  		rm -f $(MODLIB)/build ; \
-  		ln -s $(CURDIR) $(MODLIB)/build ; \
+  		rm -f $(MODLIB)/build \
+  		ln -s $(CURDIR) $(MODLIB)/build \
   	fi
   	@cp -f modules.builtin $(MODLIB)/
   	@cp -f $(objtree)/modules.builtin.modinfo $(MODLIB)/
