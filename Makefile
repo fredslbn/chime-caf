@@ -1431,12 +1431,20 @@ kselftest-merge:
 PHONY += modules_install
 modules_install: _modinst_ _modinst_post
 
+PHONY += _modinst_
 _modinst_:
+	@rm -rf $(MODLIB)/kernel
+	@rm -f $(MODLIB)/source
+	@mkdir -p $(MODLIB)/kernel
+	@ln -s $(srctree) $(MODLIB)/source
+	@if [ ! $(objtree) -ef $(MODLIB)/build ]; then \
 	@rm -f $(MODLIB)/build ; \
-	@ln -s $(CURDIR) $(MODLIB)/build ; \
+	ln -s $(objtree) $(MODLIB)/build ; \
 	fi
-	@cp -f modules.builtin $(MODLIB)/
+	@cp -f $(objtree)/modules.order $(MODLIB)/
+	@cp -f $(objtree)/modules.builtin $(MODLIB)/
 	@cp -f $(objtree)/modules.builtin.modinfo $(MODLIB)/
+	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.modinst
 
 ifdef CONFIG_MODULES
 # This depmod is only for convenience to give the initial
