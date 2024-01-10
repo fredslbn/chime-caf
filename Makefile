@@ -1445,8 +1445,8 @@ else
 	@touch $(MODLIB)/modules.order
 endif
 
-   This depmod is only for convenience to give the initial
-   boot a modules.dep even before / is mounted read-write.  However the
+   # This depmod is only for convenience to give the initial
+   # boot a modules.dep even before / is mounted read-write.
   PHONY += _modinst_post
   _modinst_post: _modinst_
   	$(call cmd,depmod)
