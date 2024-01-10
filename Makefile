@@ -1428,18 +1428,20 @@ kselftest-merge:
 # Modules
 
 # Target to install modules and accompanying files
-  PHONY += modules_install
-  modules_install: _modinst_ _modinst_post
-  _modinst_:
-  		@rm -f $(MODLIB)/build ; \
-  		@ln -s $(CURDIR) $(MODLIB)/build ; \
-  	fi
-  	@cp -f modules.builtin $(MODLIB)/
-  	@cp -f $(objtree)/modules.builtin.modinfo $(MODLIB)/
+PHONY += modules_install
+modules_install: _modinst_ _modinst_post
+  
+PHONY += _modinst_
+_modinst_:
+	@rm -f $(MODLIB)/build ; \
+	@ln -s $(CURDIR) $(MODLIB)/build ; \
+	fi
+	@cp -f modules.builtin $(MODLIB)/
+	@cp -f $(objtree)/modules.builtin.modinfo $(MODLIB)/
 
 ifdef CONFIG_MODULES
 	@sed 's:^:kernel/:' modules.order > $(MODLIB)/modules.order
-  	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.modinst
+	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.modinst
 else
 	@touch $(MODLIB)/modules.order
 endif
