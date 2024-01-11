@@ -13,13 +13,13 @@ MODEL=Xiaomi
 DEVICE=Chime
 
 # Kernel Defconfig
-DEFCONFIG=oldconfig
+DEFCONFIG=/vendor/citrus-stock-perf_defconfig
 
 # Files
 MODULE=$(pwd)/lib/modules/
 
 # Verbose Build
-VERBOSE=1
+VERBOSE=0
 
 # Date and Time
 DATE=$(TZ=Asia/Jakarta date +"%Y%m%d-%T")

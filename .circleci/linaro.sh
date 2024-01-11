@@ -25,7 +25,7 @@ IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz
 #DTB=$(pwd)/out/arch/arm64/boot/dts/mediatek
 
 # Verbose Build
-VERBOSE=1
+VERBOSE=0
 
 # Date and Time
 DATE=$(TZ=Asia/Jakarta date +"%Y%m%d-%T")
@@ -122,7 +122,7 @@ START=$(date +"%s")
 	       
 	if [ -d ${KERNEL_DIR}/gcc64 ];
 	   then
-	       make -kj$(nproc --all) O=out \
+	       make -j$(nproc --all) O=out \
 	       ARCH=arm64 \
 	       CROSS_COMPILE=$KERNEL_CCOMPILE64 \
 	       CROSS_COMPILE_ARM32=$KERNEL_CCOMPILE32 \
