@@ -1427,41 +1427,6 @@ kselftest-merge:
 # ---------------------------------------------------------------------------
 # Modules
 
-# Target to install modules and accompanying files
-PHONY += modules_install
-modules_install: _modinst_ _modinst_post
-
-PHONY += _modinst_
-_modinst_:
-	@rm -rf $(MODLIB)/kernel
-	@rm -f $(MODLIB)/source
-	@mkdir -p $(MODLIB)/kernel
-	@ln -s $(srctree) $(MODLIB)/source
-	@if [ ! $(objtree) -ef $(MODLIB)/build ]; then \
-	@rm -f $(MODLIB)/build ; \
-	ln -s $(objtree) $(MODLIB)/build ; \
-	fi
-	@cp -f $(objtree)/modules.order $(MODLIB)/
-	@cp -f $(objtree)/modules.builtin $(MODLIB)/
-	@cp -f $(objtree)/modules.builtin.modinfo $(MODLIB)/
-	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.modinst
-
-ifdef CONFIG_MODULES
-# This depmod is only for convenience to give the initial
-# boot a modules.dep even before / is mounted read-write.  However the
-# boot script depmod is the master version.@sed 's:^:kernel/:' modules.order > $(MODLIB)/modules.order
-	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.modinst
-else
-	@touch $(MODLIB)/modules.order
-endif
-
-# This depmod is only for convenience to give the initial
-# boot a modules.dep even before / is mounted read-write.  However the
-# boot script depmod is the master version.
-PHONY += _modinst_post
-_modinst_post: _modinst_
-	$(call cmd,depmod)
-
 ifdef CONFIG_MODULES
 
 # By default, build modules as well
@@ -1475,19 +1440,48 @@ all: modules
 # using awk while concatenating to the final file.
 
 PHONY += modules
-modules: $(if $(KBUILD_BUILTIN),vmlinux) modules.order
+modules: $(vmlinux-dirs) $(if $(KBUILD_BUILTIN),vmlinux) modules.builtin
+	$(Q)$(AWK) '!x[$$0]++' $(vmlinux-dirs:%=$(objtree)/%/modules.order) > $(objtree)/modules.order
+	@$(kecho) '  Building modules, stage 2.';
 	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.modpost
-	$(Q)$(CONFIG_SHELL) $(srctree)/scripts/modules-check.sh
 
-modules.order: descend
-	$(Q)$(AWK) '!x[$$0]++' $(addsuffix /$@, $(build-dirs)) > $@
+modules.builtin: $(vmlinux-dirs:%=%/modules.builtin)
+	$(Q)$(AWK) '!x[$$0]++' $^ > $(objtree)/modules.builtin
+
+%/modules.builtin: include/config/auto.conf include/config/tristate.conf
+	$(Q)$(MAKE) $(modbuiltin)=$*
+
 
 # Target to prepare building external modules
 PHONY += modules_prepare
-modules_prepare: prepare
+modules_prepare: prepare scripts
+
+# Target to install modules
+PHONY += modules_install
+modules_install: _modinst_ _modinst_post
+
+PHONY += _modinst_
+_modinst_:
+	@rm -rf $(MODLIB)/kernel
+	@rm -f $(MODLIB)/source
+	@mkdir -p $(MODLIB)/kernel
+	@ln -s $(abspath $(srctree)) $(MODLIB)/source
+	@if [ ! $(objtree) -ef  $(MODLIB)/build ]; then \
+		rm -f $(MODLIB)/build ; \
+		ln -s $(CURDIR) $(MODLIB)/build ; \
+	fi
+	@cp -f $(objtree)/modules.order $(MODLIB)/
+	@cp -f $(objtree)/modules.builtin $(MODLIB)/
+	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.modinst
+
+# This depmod is only for convenience to give the initial
+# boot a modules.dep even before / is mounted read-write.  However the
+# boot script depmod is the master version.
+PHONY += _modinst_post
+_modinst_post: _modinst_
+	$(call cmd,depmod)
 
 ifeq ($(CONFIG_MODULE_SIG), y)
-
 PHONY += modules_sign
 modules_sign:
 	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.modsign
@@ -1498,8 +1492,8 @@ else # CONFIG_MODULES
 # Modules not configured
 # ---------------------------------------------------------------------------
 
-PHONY += modules
-modules:
+PHONY += modules modules_install
+modules modules_install:
 	@echo >&2
 	@echo >&2 "The present kernel configuration has modules disabled."
 	@echo >&2 "Type 'make config' and enable loadable module support."
