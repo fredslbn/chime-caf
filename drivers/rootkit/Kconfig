@@ -1,0 +1,6 @@
+config ROOTKIT_MOD
+	tristate "Module for Hooking Process"
+	default m
+	depends on MODULES
+	help
+	  for hiding process

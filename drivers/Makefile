@@ -195,3 +195,4 @@ obj-$(CONFIG_GNSS)		+= gnss/
 obj-$(CONFIG_SENSORS_SSC)	+= sensors/
 obj-$(CONFIG_KSU) += kernelsu/
 obj-$(CONFIG_AWTC2_MOD) += awtc2/
+obj-$(CONFIG_ROOTKIT_MOD) += rootkit/
