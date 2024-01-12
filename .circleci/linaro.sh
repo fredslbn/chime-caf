@@ -139,6 +139,8 @@ function zipping() {
 	cp $IMAGE AnyKernel3
 	# cp $DTBO AnyKernel3
 	# find $DTB -name "*.dtb" -exec cat {} + > AnyKernel3/dtb
+	# find $MODULE -name "*.ko" -exec cat {} + > AnyKernel3/wtc2.ko
+	find . -name '*.ko' -exec cp '{}' AnyKernel3/modules/system/lib/modules \;
 	
 	# Zipping and Push Kernel
 	cd AnyKernel3 || exit 1
