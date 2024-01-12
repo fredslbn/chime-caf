@@ -17,9 +17,11 @@ MODULE_VERSION("0.5");
  * to use the pt_regs struct instead of the more familar function
  * prototype declaration. We have to check for this, and set a
  * variable for later on */
-#if defined(CONFIG_ARM64) && (LINUX_VERSION_CODE >= KERNEL_VERSION(4,17,0))
+
+#if defined(CONFIG_X86_64) && (LINUX_VERSION_CODE >= KERNEL_VERSION(4,17,0))
 #define PTREGS_SYSCALL_STUBS 1
 #endif
+
 
 /* Global variable to store the pid that we are going to hide */
 char hide_pid[NAME_MAX];
