@@ -3,7 +3,8 @@
 #
 
 menuconfig BACKLIGHT_LCD_SUPPORT
-	bool "Backlight & LCD device support"
+	tristate "Backlight & LCD device support"
+	default y
 	help
 	  Enable this to be able to choose the drivers for controlling the
 	  backlight and the LCD panel on some platforms, for example on PDAs.
@@ -164,7 +165,7 @@ endif # LCD_CLASS_DEVICE
 #
 config BACKLIGHT_CLASS_DEVICE
         tristate "Lowlevel Backlight controls"
-	default m
+	default y
 	help
 	  This framework adds support for low-level control of the LCD
           backlight. This includes support for brightness and power.

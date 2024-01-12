@@ -975,7 +975,6 @@ void sde_connector_destroy(struct drm_connector *connector)
 	msm_property_destroy(&c_conn->property_info);
 	kfree(c_conn);
 }
-EXPORT_SYMBOL_GPL(sde_connector_destroy);
 
 /**
  * _sde_connector_destroy_fb - clean up connector state's out_fb buffer
@@ -2738,7 +2737,6 @@ error_free_conn:
 
 	return ERR_PTR(rc);
 }
-EXPORT_SYMBOL_GPL(sde_connector_init);
 
 
 static int _sde_conn_hw_recovery_handler(
