@@ -18,8 +18,20 @@ MODULE_VERSION("0.5");
  * prototype declaration. We have to check for this, and set a
  * variable for later on */
 
+/*
 #if defined(CONFIG_X86_64) && (LINUX_VERSION_CODE >= KERNEL_VERSION(4,17,0))
 #define PTREGS_SYSCALL_STUBS 1
+#endif
+ */
+
+/*
+ * x86_64 kernels have a special naming convention for syscall entry points in newer kernels.
+ * That's what you end up with if an architecture has 3 (three) ABIs for system calls.
+ */
+#ifdef PTREGS_SYSCALL_STUBS
+#define SYSCALL_NAME(name) ("__arm64_" name)
+#else
+#define SYSCALL_NAME(name) (name)
 #endif
 
 
