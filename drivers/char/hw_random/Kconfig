@@ -4,7 +4,7 @@
 
 menuconfig HW_RANDOM
 	tristate "Hardware Random Number Generator Core support"
-	default m
+	default y
 	---help---
 	  Hardware Random Number Generator Core infrastructure.
 
@@ -312,6 +312,7 @@ config HW_RANDOM_MSM_LEGACY
 	depends on HW_RANDOM && ARCH_QCOM
 	select CRYPTO_AES
 	select CRYPTO_ECB
+	default y
 	help
 	  This driver provides kernel-side support for the Random Number
 	  Generator hardware found on QTI MSM SoCs.
