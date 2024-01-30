@@ -2738,7 +2738,6 @@ error_free_conn:
 	return ERR_PTR(rc);
 }
 
-
 static int _sde_conn_hw_recovery_handler(
 		struct drm_connector *connector, bool val)
 {
