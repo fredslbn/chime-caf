@@ -3,8 +3,7 @@
 #
 
 menuconfig BACKLIGHT_LCD_SUPPORT
-	tristate "Backlight & LCD device support"
-	default y
+	bool "Backlight & LCD device support"
 	help
 	  Enable this to be able to choose the drivers for controlling the
 	  backlight and the LCD panel on some platforms, for example on PDAs.
@@ -115,7 +114,7 @@ config LCD_HP700
 config LCD_S6E63M0
 	tristate "S6E63M0 AMOLED LCD Driver"
 	depends on SPI && BACKLIGHT_CLASS_DEVICE
-	default y
+	default n
 	help
 	  If you have an S6E63M0 LCD Panel, say Y to enable its
 	  LCD control driver.
@@ -123,7 +122,7 @@ config LCD_S6E63M0
 config LCD_LD9040
 	tristate "LD9040 AMOLED LCD Driver"
 	depends on SPI && BACKLIGHT_CLASS_DEVICE
-	default y
+	default n
 	help
 	  If you have an LD9040 Panel, say Y to enable its
 	  control driver.
@@ -131,7 +130,7 @@ config LCD_LD9040
 config LCD_AMS369FG06
 	tristate "AMS369FG06 AMOLED LCD Driver"
 	depends on SPI && BACKLIGHT_CLASS_DEVICE
-	default y
+	default n
 	help
 	  If you have an AMS369FG06 AMOLED Panel, say Y to enable its
 	  LCD control driver.
@@ -139,7 +138,7 @@ config LCD_AMS369FG06
 config LCD_LMS501KF03
 	tristate "LMS501KF03 LCD Driver"
 	depends on SPI
-	default y
+	default n
 	help
 	  If you have an LMS501KF03 LCD Panel, say Y to enable its
 	  LCD control driver.
@@ -165,7 +164,7 @@ endif # LCD_CLASS_DEVICE
 #
 config BACKLIGHT_CLASS_DEVICE
         tristate "Lowlevel Backlight controls"
-	default y
+	default m
 	help
 	  This framework adds support for low-level control of the LCD
           backlight. This includes support for brightness and power.
