@@ -15,10 +15,6 @@ DEVICE=chime
 # Kernel Defconfig
 DEFCONFIG=${DEVICE}_defconfig
 
-# Select LTO variant ( Full LTO by default )
-DISABLE_LTO=0
-THIN_LTO=0
-
 # Files
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz
 #DTBO=$(pwd)/out/arch/arm64/boot/dtbo.img
@@ -104,10 +100,15 @@ START=$(date +"%s")
 	       ARCH=arm64 \
 	       CC=$KERNEL_CLANG \
 	       CROSS_COMPILE=aarch64-linux-gnu- \
-	       #CLANG_TRIPLE=aarch64-linux-gnu- \
+	       CLANG_TRIPLE=aarch64-linux-gnu- \
 	       #LD=${LINKER} \
-	       LLVM=1 \
-	       LLVM_IAS=1 \
+	       #LLVM=1 \
+	       #LLVM_IAS=1 \
+	       AR=llvm-ar \
+	       NM=llvm-nm \
+	       OBJCOPY=llvm-objcopy \
+	       OBJDUMP=llvm-objdump \
+	       STRIP=llvm-strip \
 	       V=$VERBOSE 2>&1 | tee error.log
 	       
     fi
