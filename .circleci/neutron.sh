@@ -50,28 +50,7 @@ LINKER=ld.lld
 # Clone ToolChain
 function cloneTC() {
         
-    if [ $COMPILER = "clang17-7" ];
-	then
-    wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main/clang-r498229b.tar.gz && mkdir clang && tar -xzf clang-r498229b.tar.gz -C clang/
-    export KERNEL_CLANG_PATH="${KERNEL_DIR}/clang"
-    export KERNEL_CLANG="clang"
-    export PATH="$KERNEL_CLANG_PATH/bin:$PATH"
-    CLANG_VERSION=$(clang --version | grep version | sed "s|clang version ||")
-	
-    wget https://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz && tar -xf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
-    mv gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu gcc64
-    export KERNEL_CCOMPILE64_PATH="${KERNEL_DIR}/gcc64"
-    export KERNEL_CCOMPILE64="aarch64-linux-gnu-"
-    export PATH="$KERNEL_CCOMPILE64_PATH/bin:$PATH"
-    GCC_VERSION=$(aarch64-linux-gnu-gcc --version | grep "(GCC)" | sed 's|.*) ||')
-   
-    wget https://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/arm-linux-gnueabi/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabi.tar.xz && tar -xf gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabi.tar.xz
-    mv gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabi gcc32
-    export KERNEL_CCOMPILE32_PATH="${KERNEL_DIR}/gcc32"
-    export KERNEL_CCOMPILE32="arm-linux-gnueabi-"
-    export PATH="$KERNEL_CCOMPILE32_PATH/bin:$PATH"
-      
-    elif [ $COMPILER = "neutron" ];
+    if [ $COMPILER = "neutron" ];
     then
     mkdir Neutron
     curl -s https://api.github.com/repos/Neutron-Toolchains/clang-build-catalogue/releases/latest \
@@ -125,8 +104,8 @@ START=$(date +"%s")
 	       ARCH=arm64 \
 	       CC=$KERNEL_CLANG \
 	       CROSS_COMPILE=aarch64-linux-gnu- \
-	       CLANG_TRIPLE=aarch64-linux-gnu- \
-	       LD=${LINKER} \
+	       #CLANG_TRIPLE=aarch64-linux-gnu- \
+	       #LD=${LINKER} \
 	       LLVM=1 \
 	       LLVM_IAS=1 \
 	       V=$VERBOSE 2>&1 | tee error.log
@@ -150,8 +129,8 @@ function zipping() {
         MD5CHECK=$(md5sum "$ZIPNAME" | cut -d' ' -f1)
         echo "Zip: $ZIPNAME"
         # curl -T $ZIPNAME temp.sh; echo
-        # curl -T $ZIPNAME https://oshi.at; echo
-        curl --upload-file $ZIPNAME https://free.keep.sh
+        curl -T $ZIPNAME https://oshi.at
+        # curl --upload-file $ZIPNAME https://free.keep.sh
     cd ..
     
 }
