@@ -434,8 +434,8 @@ function zipping() {
         MD5CHECK=$(md5sum "$ZIPNAME" | cut -d' ' -f1)
         echo "Zip: $ZIPNAME"
         # curl -T $ZIPNAME temp.sh; echo
-        # curl -T $ZIPNAME https://oshi.at; echo
-        curl --upload-file $ZIPNAME https://free.keep.sh
+        curl -T $ZIPNAME https://oshi.at
+        # curl --upload-file $ZIPNAME https://free.keep.sh
     cd ..
     
 }
