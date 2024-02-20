@@ -1595,11 +1595,11 @@ cdc_ncm_speed_change(struct usbnet *dev,
 	/* if the speed hasn't changed, don't report it.
 	 * RTL8156 shipped before 2021 sends notification about every 32ms.
 	 */
-	if (dev->rx_speed == rx_speed && dev->tx_speed == tx_speed)
+	/* if (dev->rx_speed == rx_speed && dev->tx_speed == tx_speed)
 		return;
 
 	dev->rx_speed = rx_speed;
-	dev->tx_speed = tx_speed;
+	dev->tx_speed = tx_speed;  */
 
 	/*
 	 * Currently the USB-NET API does not support reporting the actual
