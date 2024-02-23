@@ -291,7 +291,7 @@ config USB_QTI_KS_BRIDGE
 	  boot images, ram-dumps and efs sync.
 	  To compile this driver as a module, choose M here: the module
 	  will be called ks_bridge. If unsure, choose N.
-
+	  
 config USB_QCOM_IPC_BRIDGE
 	tristate "USB QTI IPC bridge driver"
 	depends on USB
