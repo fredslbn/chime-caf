@@ -20,9 +20,9 @@ DEVICE=chime
 DEFCONFIG=${DEVICE}_defconfig
 
 # Files
-IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
-#DTBO=$(pwd)/out/arch/arm64/boot/dtbo.img
-#DTB=$(pwd)/out/arch/arm64/boot/dts/mediatek
+IMAGE=$(pwd)/out/arch/arm64/boot/Image
+DTBO=$(pwd)/out/arch/arm64/boot/dtbo.img
+DTB=$(pwd)/out/arch/arm64/boot/dts/vendor/qcom
 
 # Verbose Build
 VERBOSE=0
@@ -148,8 +148,8 @@ START=$(date +"%s")
 function zipping() {
 	# Copy Files To AnyKernel3 Zip
 	cp $IMAGE AnyKernel3
-	# cp $DTBO AnyKernel3
-	# find $DTB -name "*.dtb" -exec cat {} + > AnyKernel3/dtb
+	cp $DTBO AnyKernel3
+	find $DTB -name "*.dtb" -exec cat {} + > AnyKernel3/dtb.img
 	
 	# Zipping and Push Kernel
 	cd AnyKernel3 || exit 1
